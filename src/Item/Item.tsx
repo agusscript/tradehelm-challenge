@@ -1,10 +1,10 @@
 import "./Item.scss";
 
-function Item({itemList}): JSX.Element {
+function Item({itemList, btnFunction}: {itemList: string, btnFunction: any}): JSX.Element {
   return (
     <div className="list-item">
       <span className="item">{itemList}</span>
-      <button className="delete-btn">delete</button>
+      <button className="delete-btn" onClick={btnFunction}>delete</button>
     </div>
   );
 }

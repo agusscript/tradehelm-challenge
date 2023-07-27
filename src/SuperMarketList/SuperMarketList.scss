@@ -94,6 +94,11 @@
     &:focus {
       border-color: #01a8ff;
     }
+
+    &::placeholder {
+      font-size: 1rem;
+      letter-spacing: 0.1rem;
+    }
   }
 
   .btn-container {

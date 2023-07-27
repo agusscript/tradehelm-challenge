@@ -6,6 +6,10 @@ function SuperMarketList(): JSX.Element {
   const [visibility, setVisibility] = useState(false);
   const [items, setItems] = useState<string[]>([]);
 
+  function removeFromItems(indexToRemove: number) { 
+    setItems(items.filter((_, index) => index !== indexToRemove));
+  }
+
   function handleVisibility() {
     setVisibility(!visibility);
   }
@@ -18,23 +22,27 @@ function SuperMarketList(): JSX.Element {
     const input = document.querySelector("input") as HTMLInputElement;
     const item: string = input.value;
 
+    if(item == ""){
+      alert("No puede estar en blanco");
+      return;
+    }
+
     setItems((prevItem) => [...prevItem, item]);
+
+    input.value = "";
   }
 
   return (
     <main>
-      <div
-        className={`overlay ${changeVisibility()}`}
-        onClick={handleVisibility}
-      ></div>
+      <div className={`overlay ${changeVisibility()}`} onClick={handleVisibility}></div>
 
       <section className="market-list">
         <h2 className="title">Supermarket list</h2>
-        <p className="number-items">0 item(s)</p>
+        <p className="number-items">{items.length} item(s)</p>
 
         <div className="item-container">
-          {items.map((item) => (
-            <Item key={Math.random()} itemList={item}/>
+          {items.map((item, i) => (
+            <Item key={i} itemList={item} btnFunction={()=>removeFromItems(i)}/>
           ))}
         </div>
 
@@ -44,15 +52,22 @@ function SuperMarketList(): JSX.Element {
 
         <div className={`input-container ${changeVisibility()}`}>
           <h2>Add item</h2>
-          <input name="item" type="text" />
+          <input name="item" type="text" placeholder="add your item to the list..."/>
           <div className="btn-container">
             <button className="close-btn" onClick={handleVisibility}>
               Close
             </button>
-            <button className="add-btn" onClick={handleSubmit}>Add</button>
+            <button
+              className="add-btn"
+              onClick={() => {
+                handleSubmit();
+                handleVisibility();
+              }}
+            >
+              Add
+            </button>
           </div>
         </div>
-
       </section>
     </main>
   );
