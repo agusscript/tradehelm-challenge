@@ -28,12 +28,14 @@
     font-size: 2.3rem;
     font-weight: 500;
     margin: 1.6rem 0;
+    user-select: none;
   }
 
   .number-items {
     font-size: 1.4rem;
     font-weight: 500;
     margin-bottom: 1.5rem;
+    user-select: none;
   }
 
   .main-add-btn {
@@ -46,6 +48,7 @@
     background-color: #01a8ff;
     border-radius: 0.2rem;
     transition: all 0.3s;
+    user-select: none;
 
     &:hover {
       opacity: 0.8;
@@ -115,6 +118,7 @@
       color: white;
       background-color: #01a8ff;
       border-radius: 0.2rem;
+      user-select: none;
 
       &:hover {
         cursor: pointer;

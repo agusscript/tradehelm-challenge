@@ -11,9 +11,19 @@
   border-radius: 0.2rem;
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.05);
 
+  &.completed {
+    .item {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      text-decoration-color: rgba(255, 0, 0, 0.65);
+    }
+  }
+
   .item {
     font-size: 1.1rem;
     font-weight: 500;
+    user-select: none;
+    cursor: pointer;
   }
 
   .delete-btn {
@@ -25,6 +35,7 @@
     font-style: italic;
     border-radius: inherit;
     transition: all 0.2s;
+    user-select: none;
 
     &:hover {
       cursor: pointer;
