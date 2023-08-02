@@ -1,11 +1,14 @@
 import "./SuperMarketList.scss";
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Item } from "../Item/Item";
 import ItemList from "../Item/ItemList";
+import Footer from "../Footer/Footer";
 
 function SuperMarketList(): JSX.Element {
   const [visibility, setVisibility] = useState(false);
+  const [inputValue, setInputValue] = useState(String);
   const [items, setItems] = useState<Item[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function handleVisibility() {
     setVisibility(!visibility);
@@ -16,17 +19,15 @@ function SuperMarketList(): JSX.Element {
   }
 
   function addItems() {
-    const input = document.querySelector("input") as HTMLInputElement;
-    const item = new Item(input.value, false);
+    const item = new Item(inputValue, false);
+    const inputRefValue = inputRef.current?.value;
 
-    if (item.text == "") {
-      alert("The item field cannot be empty");
+    if (inputRefValue == "") {
       return;
     }
 
     setItems((prevItem) => [...prevItem, item]);
-
-    clearInput(input);
+    clearInput(inputRef.current!);
   }
 
   function clearInput(input: HTMLInputElement) {
@@ -46,49 +47,57 @@ function SuperMarketList(): JSX.Element {
   }
 
   return (
-    <main>
-      <div className={`overlay ${changeVisibility()}`} onClick={handleVisibility}></div>
+    <>
+      <main>
+        <div className={`overlay ${changeVisibility()}`} onClick={handleVisibility}></div>
 
-      <section className="market-list">
-        <h2 className="title">Supermarket list</h2>
-        <p className="number-items">{items.length} item(s)</p>
+        <section className="market-list">
+          <h2 className="title">Supermarket list</h2>
+          <p className="number-items">{items.length} item(s)</p>
 
-        <div className="item-container">
-          {items.map((item, i) => (
-            <ItemList
-              key={i}
-              itemList={item.text}
-              itemClassName={`list-item ${item.isCompleted ? "completed" : ""}`}
-              itemOnClick={() => completeItem(i)}
-              btnFunction={() => removeItem(i)}
-            />
-          ))}
-        </div>
-
-        <button className="main-add-btn" onClick={handleVisibility}>
-          Add item
-        </button>
-
-        <div className={`input-container ${changeVisibility()}`}>
-          <h2>Add item</h2>
-          <input type="text" placeholder="add your item to the list..." />
-          <div className="btn-container">
-            <button className="close-btn" onClick={handleVisibility}>
-              Close
-            </button>
-            <button
-              className="add-btn"
-              onClick={() => {
-                addItems();
-                handleVisibility();
-              }}
-            >
-              Add
-            </button>
+          <div className="item-container">
+            {items.map((item, i) => (
+              <ItemList
+                key={i}
+                itemList={item.text}
+                itemClassName={`list-item ${item.isCompleted ? "completed" : ""}`}
+                itemOnClick={() => completeItem(i)}
+                btnFunction={() => removeItem(i)}
+              />
+            ))}
           </div>
-        </div>
-      </section>
-    </main>
+
+          <button className="main-add-btn" onClick={handleVisibility}>
+            Add item
+          </button>
+
+          <div className={`input-container ${changeVisibility()}`}>
+            <h2>Add item</h2>
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="add your item to the list..."
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+            <div className="btn-container">
+              <button className="close-btn" onClick={handleVisibility}>
+                Close
+              </button>
+              <button
+                className="add-btn"
+                onClick={() => {
+                  addItems();
+                  handleVisibility();
+                }}
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }
 

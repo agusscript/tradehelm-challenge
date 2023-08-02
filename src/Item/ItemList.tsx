@@ -1,5 +1,4 @@
 import "./Item.scss";
-import { Item } from "./Item";
 
 function ItemList({
   itemList,

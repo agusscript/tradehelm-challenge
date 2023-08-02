@@ -1,0 +1,21 @@
+footer {
+  position: fixed;
+  text-align: center;
+  letter-spacing: 0.05rem;
+  bottom: 2%;
+  left: 1.5%;
+
+  a {
+    &:hover {
+      svg {
+        g {
+          fill: #01a8ff;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
